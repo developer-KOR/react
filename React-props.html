@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- script -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+  <script type="text/babel">
+    /* 컴포넌트가 받는 props는 단 하나, object 형태로 속성값은 여러개를 사용할 수 있다. 
+     ex) function Comp(props){ return <h2>{props.name}</h2> }으로 쓰고 
+        부모요소에 Component의 props 속성값을 써준다. 
+         
+     */
+    function Btn({ value, click, fontSize = 16 }){ //or Btn(props){ return [props.value] }
+      console.log(value, "가 리렌더링 되었습니다.")
+      return (
+        <button 
+          onClick={click}
+          style={{
+            backgroundColor: "#ff0000",
+            color: "#fff",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            // fontSize: big ? "20px" : "16px"
+            // App의 컴포넌트에 big={true} or {false}로 쓰면 props를 전달해 argument로 쓸 수 있다.
+            fontSize,
+          }}
+        >
+        {value}
+        </button>
+      )
+    }
+    Btn.propTypes = {
+      /* 역할 : 자체적으로 props의 유효성을 검사할수 없는 React의 기능을 보충한다.
+                props의 type을 지정해 잘못된 data가 들어갈 경우 콘솔에서 경고문을 띄운다.
+      */
+      value: PropTypes.string.isRequired,
+      fontSize: PropTypes.number,
+    }
+    const MemoryBtn = React.memo(Btn); //컴포넌트 첫글자는 항상 대문자
+    function App() {
+      const [value, setValue] = React.useState("변경사항 저장");
+      const changeValue = () => setValue("다시 저장");
+      /* 부모요소에서 onClick을 쓴다고 button에 Click 이벤트가 들어가는게 아니다. 컴포넌트엔 단순히 props만 전달된다.
+         그 전달된 props를 자식요소에 argument로 직접 쓰고 사용할 위치까지 정해줘야된다. */
+      return (
+        <div>
+          <MemoryBtn value={value} click={changeValue} fontSize={18} />&nbsp;
+          <MemoryBtn value="계속하기" />
+        </div>
+      );
+    }
+
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+  </script>
+</body>
+</html>

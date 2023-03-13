@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>React</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #app {
+      width: 100%;
+      height: 100vh;
+      background: #ddd;
+      color: #161616;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <span class="click_count">클릭 횟수 : 0 </span>&nbsp; 
+    <button class="click_btn">클릭하세요</button>&nbsp; 
+    <button class="reset_btn">초기화</button>
+  </div>
+
+  <script>
+    let num = 0;
+    const count = document.querySelector(".click_count");
+    const click = document.querySelector(".click_btn");
+    const reset = document.querySelector(".reset_btn");
+
+    function clickCount() {
+      num = num + 1;
+      count.innerText = `클릭 횟수 : ${num} `;
+    }
+
+    function resetCount() {
+      num = 0;
+      count.innerText = `클릭 횟수 : ${num} `;
+    }
+
+    click.addEventListener("click", clickCount);
+    reset.addEventListener("click", resetCount);
+  </script>
+</body>
+
+</html>

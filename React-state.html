@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css">
+  <title>React</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- script -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
+    function SqmToPs(){
+      const [amount, setAmount] = React.useState();
+      const [invert, setInvert] = React.useState(false);
+      const reset = () => setAmount("");
+
+      function changeSqms(element) {
+        setAmount(element.target.value);
+      }
+
+      function onInvert() {
+        reset();
+        setInvert((current) => !current);
+      }
+
+      
+      return (
+        <div className="container">
+          <div>
+            <label htmlFor="sqm">m2 </label>
+            <input
+              value={invert ? amount * 3.3 : amount}
+              id="sqm"
+              type="number"
+              placeholder="Sqm"
+              onChange={changeSqms}
+              disabled={invert}
+            />
+          </div>
+          <div>
+            <label htmlFor="p">평 </label>
+            <input
+              value={!invert ? amount / 3.3 : amount} 
+              id="p"
+              type="number"
+              placeholder="평"
+              onChange={changeSqms}
+              disabled={!invert}
+            />
+          </div>
+          <button onClick={reset}>값 초기화</button>&nbsp;
+          <button onClick={onInvert}>{ invert ? "m2 -> 평" : "평 -> m2"}</button>
+        </div>
+      );
+    }
+    function MinsToHrs(){
+      const [amount, setAmount] = React.useState();
+      const [invert, setInvert] = React.useState(false);
+      const reset = () => setAmount("");
+
+      function changeMins(element) {
+        setAmount(element.target.value);
+      }
+
+      function onInvert() {
+        reset();
+        setInvert((current) => !current);
+      }
+
+      
+      return (
+        <div className="container">
+          <div>
+            <label htmlFor="mins">분 </label>
+            <input
+              value={invert ? amount * 60 : amount}
+              id="mins"
+              type="number"
+              placeholder="minutes"
+              onChange={changeMins}
+              disabled={invert}
+            />
+          </div>
+          <div>
+            <label htmlFor="hrs">시간 </label>
+            <input
+              value={!invert ? amount / 60 : amount} 
+              id="hrs"
+              type="number"
+              placeholder="hours"
+              onChange={changeMins}
+              disabled={!invert}
+            />
+          </div>
+          <button onClick={reset}>값 초기화</button>&nbsp;
+          <button onClick={onInvert}>{ invert ? "시간 -> 분" : "분 -> 시간"}</button>
+        </div>
+      );
+    }
+    function KmToMiles(){
+      const [amount, setAmount] = React.useState();
+      const [invert, setInvert] = React.useState(false);
+      const reset = () => setAmount("");
+
+      function changeKms(element) {
+        setAmount(element.target.value);
+      }
+
+      function onInvert() {
+        reset();
+        setInvert((current) => !current);
+      }
+
+      
+      return (
+        <div className="container">
+          <div>
+            <label htmlFor="km">킬로미터 </label>
+            <input
+              value={invert ? amount * 1.6 : amount}
+              id="km"
+              type="number"
+              placeholder="kilometers"
+              onChange={changeKms}
+              disabled={invert}
+            />
+          </div>
+          <div>
+            <label htmlFor="mi">마일 </label>
+            <input
+              value={!invert ? amount / 1.6 : amount} 
+              id="mi"
+              type="number"
+              placeholder="miles"
+              onChange={changeKms}
+              disabled={!invert}
+            />
+          </div>
+          <button onClick={reset}>값 초기화</button>&nbsp;
+          <button onClick={onInvert}>{ invert ? "킬로미터 -> 마일" : "마일 -> 킬로미터"}</button>
+        </div>
+      );
+    }
+    function App() {
+      const [index, setIndex] = React.useState("-1");
+      function showIndex(el){
+        setIndex(el.target.value);
+      }
+
+      return (
+        <section id="wrap">
+          <h1>각종 단위 변환기</h1>
+          <select id="units" onChange={showIndex}>
+            <option value="-1">변환할 단위를 선택하세요.</option>
+            <option value="0">평방미터 & 평수</option>  
+            <option value="1">분 & 시간 단위</option>  
+            <option value="2">킬로미터 & 마일</option>  
+          </select>
+          <hr />
+          {index === "-1" ? <strong>변환할 단위를 선택하세요.</strong>: null}
+          {index === "0" ? <SqmToPs /> : null}
+          {index === "1" ? <MinsToHrs /> : null}
+          {index === "2" ? <KmToMiles /> : null}
+        </section>
+      )
+    }
+
+    ReactDOM.render(<App />, root);
+  </script>
+</body>
+</html>
